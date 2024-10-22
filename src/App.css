@@ -1,0 +1,59 @@
+/* src/App.css */
+
+/* Body and app styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0d0d2b; /* Dark background */
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.app {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Root max-width for larger screens */
+#root {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column; /* Stack sidebar and main content */
+  }
+
+  .app {
+    flex-direction: column;
+    height: auto; /* Allow height to adjust for content */
+  }
+
+  #root {
+    padding: 1rem;
+  }
+
+  .sidebar {
+    width: 100%; /* Full width for mobile */
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .dashboard {
+    padding: 10px;
+  }
+
+  table {
+    font-size: 14px; /* Smaller text for mobile */
+    overflow-x: auto; /* Horizontal scrolling on small screens */
+  }
+
+  th, td {
+    padding: 8px; /* Smaller padding for mobile */
+  }
+}

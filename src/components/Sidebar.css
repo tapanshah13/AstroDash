@@ -1,0 +1,52 @@
+/* src/components/Sidebar.css */
+
+/* Sidebar styles for larger screens */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e2f; /* Sidebar background */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5); /* Slight shadow for depth */
+  }
+  
+  .sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 20px 0;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .sidebar ul li:hover {
+    color: #ffdd57; /* Highlight color on hover */
+  }
+  
+  /* Mobile view adjustments */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%; /* Full width on mobile */
+      align-items: center;
+      padding: 10px;
+    }
+  
+    .sidebar h1 {
+      font-size: 20px; /* Slightly smaller font for mobile */
+    }
+  
+    .sidebar ul li {
+      font-size: 16px; /* Smaller text for mobile */
+    }
+  }
+  
