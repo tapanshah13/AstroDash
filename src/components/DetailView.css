@@ -1,0 +1,17 @@
+.detail-view {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    color: white;
+  }
+  
+  .detail-view a {
+    color: #ffdd57;
+    text-decoration: none;
+  }
+  
+  .detail-view a:hover {
+    color: #ffe27f;
+  }
+  

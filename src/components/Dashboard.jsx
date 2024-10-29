@@ -1,40 +1,29 @@
 // src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar
+} from 'recharts';
 import './Dashboard.css';
 
 const Dashboard = ({ weatherData }) => {
-  // Initial states for search date and slider value (full slider by default)
   const [searchDate, setSearchDate] = useState('');
-  const [moonPhase, setMoonPhase] = useState(1); // Slider default value is 1 (fully active)
+  const [moonPhase, setMoonPhase] = useState(1);
   const [filteredData, setFilteredData] = useState(weatherData.days);
 
-  // Effect to show all data on initial load
   useEffect(() => {
     setFilteredData(weatherData.days);
   }, [weatherData]);
 
   const handleSearch = () => {
-    // Inverse logic: filter moonphase where moonphase is <= slider value
-    const filtered = weatherData.days.filter((day) => {
-      return (
-        (!searchDate || day.datetime.includes(searchDate)) &&
-        (day.moonphase <= moonPhase) // Inverse logic for moon phase
-      );
+    const filtered = weatherData.days.filter(day => {
+      return (!searchDate || day.datetime.includes(searchDate)) && day.moonphase <= moonPhase;
     });
     setFilteredData(filtered);
   };
 
   return (
     <div className="dashboard">
-      <div className="header">
-        <h2>New York, New York, USA</h2>
-        <div className="time-info">
-          <p>Current Time: 14:25:39</p>
-          <p>Moon Rise: {weatherData.days[0].moonrise}</p>
-          <p>Moon Phase: {weatherData.days[0].moonphase}</p>
-        </div>
-      </div>
-
       <div className="search-section">
         <input
           type="text"
@@ -42,18 +31,37 @@ const Dashboard = ({ weatherData }) => {
           value={searchDate}
           onChange={(e) => setSearchDate(e.target.value)}
         />
-        <div className="slider-container">
-          <label>Moon Phase:</label>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={moonPhase}
-            onChange={(e) => setMoonPhase(e.target.value)}
-          />
-        </div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={moonPhase}
+          onChange={(e) => setMoonPhase(e.target.value)}
+        />
         <button onClick={handleSearch}>Search</button>
+      </div>
+
+      <div className="chart-section">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={filteredData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="datetime" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="moonphase" stroke="#8884d8" activeDot={{ r: 8 }} />
+          </LineChart>
+        </ResponsiveContainer>
+
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={filteredData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="datetime" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="temp" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
       <table>
@@ -63,6 +71,7 @@ const Dashboard = ({ weatherData }) => {
             <th>Temperature</th>
             <th>Time</th>
             <th>Phase</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -72,6 +81,9 @@ const Dashboard = ({ weatherData }) => {
               <td>{day.temp} °F</td>
               <td>{day.moonrise}</td>
               <td>{day.moonphase}</td>
+              <td>
+                <Link to={`/details/${day.datetime}`}>🔍</Link>
+              </td>
             </tr>
           ))}
         </tbody>
